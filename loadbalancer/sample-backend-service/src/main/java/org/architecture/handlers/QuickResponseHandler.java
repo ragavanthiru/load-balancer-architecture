@@ -2,21 +2,19 @@ package org.architecture.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
+import org.apache.log4j.Logger;
 import org.architecture.dto.ResponseEntity;
 import org.architecture.dto.SampleRequest;
 import org.architecture.dto.StatusCode;
 import org.architecture.errors.ApplicationExceptions;
 import org.architecture.errors.GlobalExceptionHandler;
 import org.architecture.util.HTTPConstants;
-import org.architecture.util.RestUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
 public class QuickResponseHandler extends Handler {
 
-    private static final Logger logger = LoggerFactory.getLogger(QuickResponseHandler.class);
+    private static final Logger logger = Logger.getLogger(QuickResponseHandler.class);
 
     public QuickResponseHandler(ObjectMapper objectMapper, GlobalExceptionHandler exceptionHandler) {
         super(objectMapper, exceptionHandler);

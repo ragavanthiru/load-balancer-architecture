@@ -5,18 +5,17 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
 import org.architecture.dto.HealthResponse;
 import org.architecture.dto.ResponseEntity;
 import org.architecture.dto.StatusCode;
 import org.architecture.errors.ApplicationExceptions;
 import org.architecture.errors.GlobalExceptionHandler;
 import org.architecture.util.HTTPConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HealthHandler extends Handler {
 
-    private static final Logger logger = LoggerFactory.getLogger(HealthHandler.class);
+    private static final Logger logger = Logger.getLogger(HealthHandler.class);
 
     public HealthHandler(ObjectMapper objectMapper, GlobalExceptionHandler exceptionHandler) {
         super(objectMapper, exceptionHandler);
@@ -43,7 +42,7 @@ public class HealthHandler extends Handler {
                 "Method " + exchange.getRequestMethod() + " is not allowed for " + exchange.getRequestURI()).get();
         }
 
-        logger.debug("Health handler query execution time in milliseconds : {}", System.currentTimeMillis() - queryStartTime);
+        logger.debug("Health handler query execution time in milliseconds : " + (System.currentTimeMillis() - queryStartTime));
 
         OutputStream os = exchange.getResponseBody();
         os.write(response);

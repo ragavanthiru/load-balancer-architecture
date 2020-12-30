@@ -11,6 +11,7 @@
     <name>load-balancer</name>
 
     <modules>
+        <module>common</module>
         <module>message-handler</module>
         <module>session-handler</module>
         <module>cluster-manager</module>
@@ -19,7 +20,7 @@
         <module>sample-backend-service</module>
         <module>disruptor-transport</module>
         <module>client-manager</module>
-        <module>common</module>
+
     </modules>
 
     <properties>

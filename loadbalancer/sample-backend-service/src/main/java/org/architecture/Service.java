@@ -1,10 +1,9 @@
 package org.architecture;
 
 import com.sun.net.httpserver.HttpServer;
+import org.apache.log4j.Logger;
 import org.architecture.handlers.HealthHandler;
 import org.architecture.handlers.QuickResponseHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,7 +13,7 @@ import static org.architecture.config.Configuration.getObjectMapper;
 
 public class Service
 {
-    private static final Logger logger = LoggerFactory.getLogger(Service.class);
+    private static final Logger logger = Logger.getLogger(Service.class);
 
     public static void main( String[] args )
     {
