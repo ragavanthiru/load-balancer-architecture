@@ -1,21 +1,16 @@
 package org.architecture;
 
-import java.util.List;
-import java.util.Map;
+import org.architecture.algorithm.Endpoint;
+import org.architecture.algorithm.LoadBalanceStrategy;
 
 public class BackendSelector {
 
-    BackendInitiator backendInitiator = null;
-    Map<String, List<String>> clusters = null;
-    Map<String, Integer> index = null;
-    public BackendSelector(){
-        backendInitiator = BackendInitiator.getInstance();
-        clusters = backendInitiator.getClusters();
+    LoadBalanceStrategy loadBalanceStrategy;
+    public BackendSelector(LoadBalanceStrategy loadBalanceStrategy){
+        this.loadBalanceStrategy = loadBalanceStrategy;
     }
 
-
-
-    public String getServer(String cluster){
-        return null;
+    public Endpoint getServer(String cluster){
+        return loadBalanceStrategy.getServer(cluster);
     }
 }

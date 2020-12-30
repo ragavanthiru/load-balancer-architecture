@@ -1,4 +1,4 @@
-package org.architecture.thread;
+package org.architecture.bio.listener;
 
 import org.apache.http.HttpHost;
 import org.apache.http.impl.DefaultBHttpClientConnection;

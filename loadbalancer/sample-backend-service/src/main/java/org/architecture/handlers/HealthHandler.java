@@ -33,7 +33,12 @@ public class HealthHandler extends Handler {
             exchange.getResponseHeaders().putAll(e.getHeaders());
             exchange.sendResponseHeaders(e.getStatusCode().getCode(), 0);
             response = super.writeResponse(e.getBody());
-        } else {
+        } else if ("GET".equals(exchange.getRequestMethod())) {
+            ResponseEntity e = doGet();
+            exchange.getResponseHeaders().putAll(e.getHeaders());
+            exchange.sendResponseHeaders(e.getStatusCode().getCode(), 0);
+            response = super.writeResponse(e.getBody());
+        }  else {
             throw ApplicationExceptions.methodNotAllowed(
                 "Method " + exchange.getRequestMethod() + " is not allowed for " + exchange.getRequestURI()).get();
         }
@@ -51,5 +56,13 @@ public class HealthHandler extends Handler {
 
         return new ResponseEntity<>(response,
             getHeaders(HTTPConstants.CONTENT_TYPE, HTTPConstants.APPLICATION_JSON), StatusCode.OK);
+    }
+
+    private ResponseEntity<HealthResponse> doGet() {
+        logger.debug("Received a request for health handler");
+        HealthResponse response = new HealthResponse("up");
+
+        return new ResponseEntity<>(response,
+                getHeaders(HTTPConstants.CONTENT_TYPE, HTTPConstants.APPLICATION_JSON), StatusCode.OK);
     }
 }

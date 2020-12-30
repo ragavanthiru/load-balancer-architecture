@@ -1,19 +1,16 @@
-package org.architecture;
+package org.architecture.bio;
 
 import org.apache.http.HttpHost;
-import org.architecture.thread.RequestListenerThread;
+import org.architecture.bio.listener.RequestListenerThread;
 
 public class BlockingTransportInitializer
 {
     public static void main(final String[] args) throws Exception {
         HttpHost targetHost = new HttpHost(
-                "localhost",
+                PropertySource.getProperty(TransportConstant.LISTEN_HOST),
                 9001,
                 "http");
-        int port = 8080;
-        if (args.length > 1) {
-            port = Integer.parseInt(args[1]);
-        }
+        int port = Integer.parseInt(PropertySource.getProperty(TransportConstant.LISTEN_PORT));
 
         System.out.println("Reverse proxy to " + targetHost);
 

@@ -1,4 +1,4 @@
-package org.architecture.thread;
+package org.architecture.bio.listener;
 
 import org.apache.http.ConnectionClosedException;
 import org.apache.http.HttpException;
@@ -7,11 +7,12 @@ import org.apache.http.impl.DefaultBHttpServerConnection;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpService;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class WorkerThread extends Thread {
-
+    final static Logger logger = Logger.getLogger(WorkerThread.class);
     private static final String HTTP_IN_CONN = "http.proxy.in-conn";
     private static final String HTTP_OUT_CONN = "http.proxy.out-conn";
     private static final String HTTP_CONN_KEEPALIVE = "http.proxy.conn-keepalive";
@@ -32,7 +33,7 @@ public class WorkerThread extends Thread {
 
     @Override
     public void run() {
-        System.out.println("New connection thread");
+        logger.debug("New connection thread");
         final HttpContext context = new BasicHttpContext(null);
 
         // Bind connection objects to the execution context

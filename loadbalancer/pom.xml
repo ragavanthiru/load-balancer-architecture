@@ -19,6 +19,7 @@
         <module>sample-backend-service</module>
         <module>disruptor-transport</module>
         <module>client-manager</module>
+        <module>common</module>
     </modules>
 
     <properties>

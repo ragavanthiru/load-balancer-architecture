@@ -1,15 +1,16 @@
-package org.architecture.thread;
+package org.architecture.bio.thread;
 
 import org.apache.http.*;
 import org.apache.http.impl.DefaultBHttpClientConnection;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.protocol.*;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.Socket;
 
 public class ProxyHandler implements HttpRequestHandler {
-
+    final static Logger logger = Logger.getLogger(ProxyHandler.class);
     private static final String HTTP_IN_CONN = "http.proxy.in-conn";
     private static final String HTTP_OUT_CONN = "http.proxy.out-conn";
     private static final String HTTP_CONN_KEEPALIVE = "http.proxy.conn-keepalive";
@@ -41,13 +42,13 @@ public class ProxyHandler implements HttpRequestHandler {
         if (!conn.isOpen() || conn.isStale()) {
             final Socket outsocket = new Socket(this.target.getHostName(), this.target.getPort() >= 0 ? this.target.getPort() : 80);
             conn.bind(outsocket);
-            System.out.println("Outgoing connection to " + outsocket.getInetAddress());
+            logger.debug("Outgoing connection to " + outsocket.getInetAddress());
         }
 
         context.setAttribute(HttpCoreContext.HTTP_CONNECTION, conn);
         context.setAttribute(HttpCoreContext.HTTP_TARGET_HOST, this.target);
 
-        System.out.println(">> Request URI: " + request.getRequestLine().getUri());
+        logger.debug(">> Request URI: " + request.getRequestLine().getUri());
 
         // Remove hop-by-hop headers
         request.removeHeaders(HTTP.TARGET_HOST);
@@ -76,9 +77,11 @@ public class ProxyHandler implements HttpRequestHandler {
         response.setStatusLine(targetResponse.getStatusLine());
         response.setHeaders(targetResponse.getAllHeaders());
         response.setEntity(targetResponse.getEntity());
-
-        System.out.println("<< Response: " + response.getStatusLine());
-
+        HttpEntity entity = targetResponse.getEntity();
+        //InputStream is = entity.getContent();
+        //String result = EntityUtils.toString(entity);
+        logger.debug("<< Response: " + response.getStatusLine());
+        //logger.debug("<< Response Body: " + result);
         final boolean keepalive = this.connStrategy.keepAlive(response, context);
         context.setAttribute(HTTP_CONN_KEEPALIVE, new Boolean(keepalive));
     }
